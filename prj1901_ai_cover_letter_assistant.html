@@ -1,6 +1,3 @@
-{% extends "base.html" %}
-
-{% block content %}
 <head>
 	<link rel="stylesheet" type="text/css" href="style01.css" />
 </head>
@@ -96,7 +93,7 @@ Word2vec is used for the synonym recommendation function. We observes outputs wi
 
 
 <p>Auto-completion of sentence<br>
-Auto-completion of sentence is implemented with one LSTM layer whose input texts are tokenized by whitespace interval. This model requires input texts in slided sequences, for example:
+Auto-completion of sentence is implemented with one LSTM layer whose input texts are tokenized by whitespace. This model requires input texts in slided sequences, for example:
 <table border=1>
 	<tr>
 		<td>Original sentence
@@ -124,9 +121,8 @@ Auto-completion of sentence is implemented with one LSTM layer whose input texts
             I / at school / a book / read
 	</tr>
 </table>
-
+The output layer of the model is a dense layer with softmax activation function.
 
 
 </p>
 </body>
-{% endblock content %}
