@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <head>
 	<link rel="stylesheet" type="text/css" href="style01.css" />
 </head>
@@ -46,7 +49,7 @@ Although hiring processes are different by companies and such as document screen
 Technics: word2vec, LSTM, seq2seq, BERT(classification)<br>
 
 Conclusions: The synonym recommendation function of word2vec model does not always shows synonyms. The <p>Synonym recommendation<br>
-Word2vec model returns with some keywords such as "증가-increase" with return value of "감소-decrease". We learned that these tendancy that sometimes the word2vec model returns antonyms is inborn nature of the word2vec model caused by its embedding alogorithm using relation between a central word and neighboring words within window size. Therefore new algorithn is needed in order to get only synonyms excluding antonyms. Meanwhile, we learned that it is required careful interpretation on how close are of two words with 2D scatter plot using tknr library in that the angles in the 2D plots does not always match with the cosine values calculated in N dimension</p>
+Word2vec model returns with some keywords such as "증가-increase" with return value of "감소-decrease". We learned that these tendancy that sometimes the word2vec model returns antonyms is inborn nature of the word2vec model caused by its embedding alogorithm using relation between a central word and neighboring words within window size. Therefore new algorithn is needed in order to get only synonyms excluding antonyms. Meanwhile, we learned that it is required careful interpretation on how close are of two words with 2D scatter plot using tknr library in that the angles in the 2D plots does not always match with the cosine values calculated in N dimension.</p>
 
 <p>Auto-completion of sentence<br>
 Auto-completion of sentence is implemented with LSTM layer and it uses tokens seperated by whitespace. The model trained with entire corpus returns sentences which are more complete in grammar compared to other model with categorized corpus. Meanwhile the model with cateogorized corpus seems to return topic specialized sentences. The tokenization by phoneme can not be adopted which exceeds memory limit of the 10Gb GPU memory which are, however, successfully applied to text generation model. The reason is that LSTM layer forces to expand each sentences of input data by sliding token by token.</p>
@@ -63,7 +66,7 @@ Datasets are 6,000 cover letters which have 4 pairs of questions and answers on 
 <li>"title of the text"</li>
 <li>1. title of the text</li>
 Titles are mostly well extracted by using regular expression with simple patterns, however, there are few bad cases also when writers just use the title marks inside the text to emphasize words or enumerate lists such as their skills.<br></p>
-<p>Model implementation<br></p>
+<h3>Model implementation</h3>
 <p>Synonym recommendation<br>
 Word2vec is used for the synonym recommendation function. We observes outputs with regard to changing training iteration and input corpus for the word2vec model. While, other hyperparameters such as word vector dimension, window size, number of minimum repeation and word2vec algorithm are fixed:<br>
 <table border=1>
@@ -80,7 +83,7 @@ Word2vec is used for the synonym recommendation function. We observes outputs wi
 		<td>5
 	</tr>
 	<tr>
-		<td>num. of minium repeation
+		<td>num. of minium repeatition
 		<td>5
 	</tr>
 	<tr>
@@ -88,7 +91,42 @@ Word2vec is used for the synonym recommendation function. We observes outputs wi
 		<td>sg
 	</tr>
 </table>
-<p>One models are trained with 6,000 cover letters corpus(35Mb) and the other are trained with 81Mb wikidata[1]. The input data is filtered with Okt pos tagger into nouns. Although there remains still unuseful tokens such as "것(thing), 수(able), 이(this), 그(the), 저(that)", however, they are few and are ignorable. Because the window size is selected as 5, so we concluded that it is enough big to offset when the stopwords appears next to central words.</p>
+<p>One models are trained with 6,000 cover letters corpus(35Mb) and the other are trained with 81Mb wikidata[1]. The input data is filtered into nouns with Okt pos tagger function. Although there remains still unuseful tokens such as "것(thing), 수(able), 이(this), 그(the), 저(that)", however, they are few and are ignorable. Because the window size is selected as 5, so we concluded that it is big enough to offset when the stopwords appears next to central words.</p>
 </p>
 
+
+<p>Auto-completion of sentence<br>
+Auto-completion of sentence is implemented with one LSTM layer whose input texts are tokenized by whitespace interval. This model requires input texts in slided sequences, for example:
+<table border=1>
+	<tr>
+		<td>Original sentence
+		<td>"나는 학교에서 책을 읽는다."<br>
+        (I read a book at school)
+	</tr>
+	<tr>
+		<td>slided1
+		<td>"나는"<br>
+        I
+	</tr>
+	<tr>
+		<td>slided2
+		<td>"나는 학교에서""<br>
+            I / at school
+	</tr>
+	<tr>
+		<td>slided3
+		<td>"나는 학교에서 책을"<br>
+            I / at school / a book
+	</tr>
+	<tr>
+		<td>slided4
+		<td>"나는 학교에서 책을 읽는다."<br>
+            I / at school / a book / read
+	</tr>
+</table>
+
+
+
+</p>
 </body>
+{% endblock content %}
