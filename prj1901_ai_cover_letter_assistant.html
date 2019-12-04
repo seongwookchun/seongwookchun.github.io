@@ -45,27 +45,30 @@ Although hiring processes are different by companies and such as document screen
 <br>
 Technics: word2vec, LSTM, seq2seq, BERT(classification)<br>
 
-Conclusions: The synonym recommendation function of word2vec model does not always shows synonyms. The <p>Synonym recommendation<br>
-Word2vec model returns with some keywords such as "증가-increase" with return value of "감소-decrease". We learned that these tendancy that sometimes the word2vec model returns antonyms is inborn nature of the word2vec model caused by its embedding alogorithm using relation between a central word and neighboring words within window size. Therefore new algorithn is needed in order to get only synonyms excluding antonyms. Meanwhile, we learned that it is required careful interpretation on how close are of two words with 2D scatter plot using tknr library in that the angles in the 2D plots does not always match with the cosine values calculated in N dimension.</p>
+Conclusions: The synonym recommendation function of word2vec model does not always returns synonyms. The <p>Synonym recommendation<br>
+Word2vec model returns with some keywords such as "증가-increase" with return value of "감소-decrease". We learned that these tendancy that sometimes the word2vec model returns antonyms is inborn nature of the word2vec model caused by its embedding alogorithm using relation between a central word and neighboring words within window size. Therefore new algorithn is needed in order to get only synonyms excluding antonyms. Meanwhile, we learned that the closeness of two words read from the 2D-plot obtained from TSNE module in Sklearn library does not always follow with its cosine similarity. It is inferred that TSNE does not reflects well enough the relation between word vectors from big dimension(200-dim) into two dimension.</p>
 
 <p>Auto-completion of sentence<br>
-Auto-completion of sentence is implemented with LSTM layer and it uses tokens seperated by whitespace. The model trained with entire corpus returns sentences which are more complete in grammar compared to other model with categorized corpus. Meanwhile the model with cateogorized corpus seems to return topic specialized sentences. The tokenization by phoneme can not be adopted which exceeds memory limit of the 10Gb GPU memory which are, however, successfully applied to text generation model. The reason is that LSTM layer forces to expand each sentences of input data by sliding token by token.</p>
+Auto-completion of sentence is implemented with LSTM layer and it uses tokens seperated by whitespace. The model trained with entire corpus returns sentences which are more complete in grammar compared to another model with categorized corpus. Meanwhile the model with cateogorized corpus seems to return topic-specific sentences. The tokenization by phoneme can not be adopted as it exceeds memory limit of the 10Gb GPU memory which are, however, successfully applied to title recommendation model. The reason is that LSTM layer forces to expand samples by sliding input sentences token by token.</p>
 
 <p>Title recommendation<br>
-Title recommendation is implemented with seq2seq model and it uses tokens seperated by phoneme with conversion Korean characters into roman characters. The model with transfer learning seems to return titles which are different from target title compared to other model without transfer learning. Although those two model often return titles, which are grammatically incorrect and are awkward combinations of words, are good at making meaningful words at least without breaking a character into consonants and vowels.</p>
+Title recommendation is implemented with seq2seq model and it uses tokens seperated by phoneme with conversion Korean characters into roman characters. The model with transfer learning seems to return titles which are different from target titles compared to another model without transfer learning. Although those two models often return titles, which are grammatically incorrect and are awkward combinations of words, they are good at making meaningful words at least without breaking a character into consonants and vowels.</p>
 
 <p>Auto labeling<br>
-The auto labeling model implemented with MLP creates data which is used in other main generative models would be quite useful when it's validation accuracy with 55% is improved. The activation function of the output layer should be sigmoid function 
-The auto labeling model implemented with MLP should choose sigmoid function at the output layer rather than softmax function. Because it is impossible to classify the text-title pairs with only one label. It is inevitable for about one third of input data to be labeled with more than one category among 9 types totally. The BERT model trained only with single labeled text-title pairs reaches high validation accuracy over than 90% when the training epoch is only 8 while the model with MLP reaches its best performance, 55% when the training epoch is about 2,000. The BERT model for multi labeled text-title pairs are being implemented.</p>
+The purpose of the auto labeling model implemented with multi layer perceptrons(MLP) is to create data which is used in the other main generation models. would be quite useful when it's validation accuracy with 55% is improved. 
+Selection of activation function of the output layer is a matter of concern as it is directly related to convergence of the loss function.
+The auto labeling model implemented with MLP should select sigmoid function at the output layer rather than softmax function which is chosen in general for multi-class classification. The dataset is allowed to be labeled with more than two categories. Because it is so hard to classify the question with only one label and they would be too many to handle if giving labels whenever the question is slightly different from previous ones. It is inevitable for about one third of input data to be labeled with over than one categories among 9 types. BERT model is used as an alternative. It is observed that the BERT model trained only with single labeled question, reaches high validation accuracy over than 90% when the training epoch is only 8. While the model with MLP reaches its best performance, 55% when the training epoch is about 2,000. The BERT model for multi labeled question requires to modify one of scripts of its model classes, which is being implemented(5 Dec, 2019).</p>
 
-<p>Datasets<br>
-Datasets are 6,000 cover letters which have 4 pairs of questions and answers on average. Each answers in the pairs mostly includes paragraphs titles which are surrounded by title marks such as ", ', [], () or are next to an index number, for example. 
+<p>Dataset<br>
+Dataset is 6,000 cover letters which have on average 4 question-answer pairs. Each answers in the pairs mostly includes paragraphs titles which are surrounded by quotation marks or parenthesis such as ", ', [], () or are next to an index number, for example. 
 <li>"title of the text"</li>
 <li>1. title of the text</li>
-Titles are mostly well extracted by using regular expression with simple patterns, however, there are few bad cases also when writers just use the title marks inside the text to emphasize words or enumerate lists such as their skills.<br></p>
-<h3>Model implementation</h3>
+Although about 40,000 titles are extracted by using regular expression with simple patterns, there are few tricky cases also when writers, for example, just use quotation marks at the both ends of a word or a phrase appearing not at the top of the paragraphs but at the middle of it. This method should be improved to drop out unwanted results and duplicates.
+
+<br></p>
+<h3>Experiments implementation</h3>
 <p>Synonym recommendation<br>
-Word2vec is used for the synonym recommendation function. We observes outputs with regard to changing training iteration and input corpus for the word2vec model. While, other hyperparameters such as word vector dimension, window size, number of minimum repeation and word2vec algorithm are fixed:<br>
+Word2vec is used for the synonym recommendation task. We observes outputs by changing training iteration and input corpus for the word2vec model. While, other hyperparameters such as word vector dimension, window size, number of minimum repeation and word2vec algorithm are fixed:<br>
 <table border=1>
 	<tr>
 		<td>hyperparameters
@@ -88,7 +91,33 @@ Word2vec is used for the synonym recommendation function. We observes outputs wi
 		<td>sg
 	</tr>
 </table>
-<p>One models are trained with 6,000 cover letters corpus(35Mb) and the other are trained with 81Mb wikidata[1]. The input data is filtered into nouns with Okt pos tagger function. Although there remains still unuseful tokens such as "것(thing), 수(able), 이(this), 그(the), 저(that)", however, they are few and are ignorable. Because the window size is selected as 5, so we concluded that it is big enough to offset when the stopwords appears next to central words.</p>
+<p>One models are trained with 6,000 cover letters corpus(35Mb) and the other are trained with 81Mb wikidata[1] by "박규병, K.B. Park". The input data is filtered into nouns with Okt pos tagger function. Although there remains still unuseful tokens such as "것(thing), 수(able), 이(this), 그(the), 저(that)", however, they are few and are ignorable. Because the window size is selected as 5, so we concluded that it is big enough to offset when the stopwords appears next to central words.</p>
+
+<p>Plots by TSNE does not match real cosine similarity.
+TSNE module embeds vectors with big dimension into smaller dimension. Although careful examination on its algorithm of embedding, As for the observation of one counterexample, it is inferred that 2d plots by TSNE module does not match real cosine similarity. The table below contains two words and two measures with the keyword "경험(experience)" and its iteration is 1,000.
+<table border=1>
+	<tr>
+		<td>dist./ word
+		<td>cos similarity
+        <td>Euclidean dist.
+	</tr>
+	<tr>
+		<td>"역량(capability)"
+            [closer]
+		<td>0.42
+        <td>1.08
+	</tr>
+	<tr>
+		<td>"깨달음(realization)"
+            [farther]
+		<td>0.40
+        <td>1.10
+	</tr>
+</table>
+The values of the table above concludes "역량(capability)" is closer to key word "경험(experience)", however, the 2d-plot by TSNE shows "깨달음(realization)" is closer by its angle and by its Euclidean distance.<br>
+<img src="{% static '2dplot_tsne_k_experience.png' %}"><br>
+<!-- <img src="2dplot_tsne_k_experience.png"><br> -->
+The yellow dot is the key word, "경험(experience)". The blue solid line connected to the yellow dot, whose the other end is connected to the coordinate origin, is given as a base line to read angle between words.
 </p>
 
 
@@ -121,7 +150,7 @@ Auto-completion of sentence is implemented with one LSTM layer whose input texts
             I / at school / a book / read
 	</tr>
 </table>
-The output layer of the model is a dense layer with softmax activation function.
+The output layer of the model is a dense layer with softmax activation function which decides the best probable word in the vocab.
 
 
 </p>
