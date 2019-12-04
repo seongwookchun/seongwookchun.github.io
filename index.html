@@ -2,21 +2,156 @@
 	<link rel="stylesheet" type="text/css" href="style01.css" />
 </head>
 <body>
-<h1>Study blog - Seongwook Chun</h1>
+prj1901_ai_cover_letter_assistant.html
 <p>
-Seongwook Chun<br>
-Bachelor of science in Physics, Universtiy of Seoul, Korea.(2020)
+<h1>Team project - AI cover letter assistant</h1>
+<h2>A rudimentary study on text generation, abstractive summarization and auto labeling with corpus of cover letters(Korean langauge)</h2>
 </p>
-<p>
-Here, mostly theories and trials of solving problems in NLP are treated.
-</p>
+<br>
 
 <p>
-Interests : Text generation, Abstractive summarization, Auto labeling on texts, NLP<br>
-Projects :<br>
-1. Team project(3 people) : AI cover letter assistant(2 month, 27 Sep ~ 11 Nov 2019)<br>
-(A rudimentary study on text generation and abstractive summarization with corpus of cover letters)<br>
-<a href="prj1901_ai_cover_letter_assistant.html">link</a><br>
+<h3>Authors</h3>
+Seung-geun Park / Seunggeun.parkk@gmail.com<br>
+Bachelor of Arts in English Language and Literature<br>
+Comparasion of Word2vec performance with respect to training iteration and corpus<br>
+[On going] Implementation of auto labeling on multi labeled samples with BERT model<br>
+</p>
+<p>
+Yoon-ho Song / dbsgh3322@gmail.com<br>
+Bachelor of Science in Industrial Engineering, Inha University Department of Industrial Engineering.<br>
+Contributions:<br>
+Implementation of texts generation model.<br>
+Implementation of abstractive summarization model.<br>
+</p>
+<p>
+Seong-wook Chun / chun3842@gmail.com<br>
+Bachelor of Science in Physics, University of Seoul, Korea.<br>
+contributions:<br>
+Implementation of auto labeling on multi labeled samples with MLP model.<br>
+Support for implementation of NLG models.<br>
+</p>
+<p>
+
+</p>
+<p>
+<h3>Abstract</h3>
+Concept of the project: <br>
+These days, job seekers make a lot of efforts and spend their time to get promising jobs.
+Although hiring processes are different by companies and such as document screening, aptitude test, interview, and group discussion and each steps are important to pass to the next step, however, the most important thing and the thing that shows who they are and how they are aptitude to requirements of promising roles is cover letter. We planned this project to support for writing cover letters easily by offering three main functions and one subsidiary model to help making datasets for the main models.<br><br>
+<li>Synonym recommendation</li>
+<li>Auto-completion of sentence</li>
+<li>Title recommendation</li>
+<li>Auto labeling with MLP and BERT</li>
+<br>
+Technics: word2vec, LSTM, seq2seq, BERT(classification)<br>
+
+Conclusions: The synonym recommendation function of word2vec model does not always returns synonyms. The <p>Synonym recommendation<br>
+Word2vec model returns with some keywords such as "증가-increase" with return value of "감소-decrease". We learned that these tendancy that sometimes the word2vec model returns antonyms is inborn nature of the word2vec model caused by its embedding alogorithm using relation between a central word and neighboring words within window size. Therefore new algorithn is needed in order to get only synonyms excluding antonyms. Meanwhile, we learned that the closeness of two words read from the 2D-plot obtained from TSNE module in Sklearn library does not always follow with its cosine similarity. It is inferred that TSNE does not reflects well enough the relation between word vectors from big dimension(200-dim) into two dimension.</p>
+
+<p>Auto-completion of sentence<br>
+Auto-completion of sentence is implemented with LSTM layer and it uses tokens seperated by whitespace. The model trained with entire corpus returns sentences which are more complete in grammar compared to another model with categorized corpus. Meanwhile the model with cateogorized corpus seems to return topic-specific sentences. The tokenization by phoneme can not be adopted as it exceeds memory limit of the 10Gb GPU memory which are, however, successfully applied to title recommendation model. The reason is that LSTM layer forces to expand samples by sliding input sentences token by token.</p>
+
+<p>Title recommendation<br>
+Title recommendation is implemented with seq2seq model and it uses tokens seperated by phoneme with conversion Korean characters into roman characters. The model with transfer learning seems to return titles which are different from target titles compared to another model without transfer learning. Although those two models often return titles, which are grammatically incorrect and are awkward combinations of words, they are good at making meaningful words at least without breaking a character into consonants and vowels.</p>
+
+<p>Auto labeling<br>
+The purpose of the auto labeling model implemented with multi layer perceptrons(MLP) is to create data which is used in the other main generation models. would be quite useful when it's validation accuracy with 55% is improved. 
+Selection of activation function of the output layer is a matter of concern as it is directly related to convergence of the loss function.
+The auto labeling model implemented with MLP should select sigmoid function at the output layer rather than softmax function which is chosen in general for multi-class classification. The dataset is allowed to be labeled with more than two categories. Because it is so hard to classify the question with only one label and they would be too many to handle if giving labels whenever the question is slightly different from previous ones. It is inevitable for about one third of input data to be labeled with over than one categories among 9 types. BERT model is used as an alternative. It is observed that the BERT model trained only with single labeled question, reaches high validation accuracy over than 90% when the training epoch is only 8. While the model with MLP reaches its best performance, 55% when the training epoch is about 2,000. The BERT model for multi labeled question requires to modify one of scripts of its model classes, which is being implemented(5 Dec, 2019).</p>
+
+<p>Dataset<br>
+Dataset is 6,000 cover letters which have on average 4 question-answer pairs. Each answers in the pairs mostly includes paragraphs titles which are surrounded by quotation marks or parenthesis such as ", ', [], () or are next to an index number, for example. 
+<li>"title of the text"</li>
+<li>1. title of the text</li>
+Although about 40,000 titles are extracted by using regular expression with simple patterns, there are few tricky cases also when writers, for example, just use quotation marks at the both ends of a word or a phrase appearing not at the top of the paragraphs but at the middle of it. This method should be improved to drop out unwanted results and duplicates.
+
+<br></p>
+<h3>Experiments implementation</h3>
+<p>Synonym recommendation<br>
+Word2vec is used for the synonym recommendation task. We observes outputs by changing training iteration and input corpus for the word2vec model. While, other hyperparameters such as word vector dimension, window size, number of minimum repeation and word2vec algorithm are fixed:<br>
+<table border=1>
+	<tr>
+		<td>hyperparameters
+		<td>values
+	</tr>
+	<tr>
+		<td>dim. of word vector
+		<td>200
+	</tr>
+	<tr>
+		<td>window size
+		<td>5
+	</tr>
+	<tr>
+		<td>num. of minium repeatition
+		<td>5
+	</tr>
+	<tr>
+		<td>algorithm
+		<td>sg
+	</tr>
+</table>
+<p>One models are trained with 6,000 cover letters corpus(35Mb) and the other are trained with 81Mb wikidata[1] by "박규병, K.B. Park". The input data is filtered into nouns with Okt pos tagger function. Although there remains still unuseful tokens such as "것(thing), 수(able), 이(this), 그(the), 저(that)", however, they are few and are ignorable. Because the window size is selected as 5, so we concluded that it is big enough to offset when the stopwords appears next to central words.</p>
+
+<p>Plots by TSNE does not match real cosine similarity.
+TSNE module embeds vectors with big dimension into smaller dimension. Although careful examination on its algorithm of embedding, As for the observation of one counterexample, it is inferred that 2d plots by TSNE module does not match real cosine similarity. The table below contains two words and two measures with the keyword "경험(experience)" and its iteration is 1,000.
+<table border=1>
+	<tr>
+		<td>dist./ word
+		<td>cos similarity
+        <td>Euclidean dist.
+	</tr>
+	<tr>
+		<td>"역량(capability)"
+            [closer]
+		<td>0.42
+        <td>1.08
+	</tr>
+	<tr>
+		<td>"깨달음(realization)"
+            [farther]
+		<td>0.40
+        <td>1.10
+	</tr>
+</table>
+The values of the table above concludes "역량(capability)" is closer to key word "경험(experience)", however, the 2d-plot by TSNE shows "깨달음(realization)" is closer by its angle and by its Euclidean distance.<br>
+<img src="{% static '2dplot_tsne_k_experience.png' %}"><br>
+<!-- <img src="2dplot_tsne_k_experience.png"><br> -->
+The yellow dot is the key word, "경험(experience)". The blue solid line connected to the yellow dot, whose the other end is connected to the coordinate origin, is given as a base line to read angle between words.
+</p>
+
+
+<p>Auto-completion of sentence<br>
+Auto-completion of sentence is implemented with one LSTM layer whose input texts are tokenized by whitespace. This model requires input texts in slided sequences, for example:
+<table border=1>
+	<tr>
+		<td>Original sentence
+		<td>"나는 학교에서 책을 읽는다."<br>
+        (I read a book at school)
+	</tr>
+	<tr>
+		<td>slided1
+		<td>"나는"<br>
+        I
+	</tr>
+	<tr>
+		<td>slided2
+		<td>"나는 학교에서""<br>
+            I / at school
+	</tr>
+	<tr>
+		<td>slided3
+		<td>"나는 학교에서 책을"<br>
+            I / at school / a book
+	</tr>
+	<tr>
+		<td>slided4
+		<td>"나는 학교에서 책을 읽는다."<br>
+            I / at school / a book / read
+	</tr>
+</table>
+The output layer of the model is a dense layer with softmax activation function which decides the best probable word in the vocab.
+
 
 </p>
 </body>
