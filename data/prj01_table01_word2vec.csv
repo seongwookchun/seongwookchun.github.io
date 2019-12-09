@@ -1,0 +1,5 @@
+hyperparameters,values
+dim. of word vector,200
+window size,5
+num. of minium repeatition,5
+algorithm,sg
