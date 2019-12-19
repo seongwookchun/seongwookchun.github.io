@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<html lang="ko" class="log_chun_repl_co">
+    <head>
+        <title>log_chun</title>
+        <style>
+            div {
+                border-style: solid;
+                border-width: 1px;
+                border-color: black;
+                text-align: center;
+                margin: 5px;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="nav">
+                <h1>nav</h1>
+                <a href="../"><button>이전</button></a>
+            </div>
+            <div class="content">
+                <h1>Python > Pybinding 패키지 이용한 이차원 물질의 모델링 (9-7그래핀 나노리본의 모델링)</h1>
+                {% load staticfiles %}
+                <img src="{% static "gnr_modeling_technique_3.png" %}">
+                <img src="{% static "gnr_modeling_technique_1.png" %}">
+                <img src="{% static "gnr_modeling_technique_2.png" %}">
+                <!-- <img src="{% static "resources/gnr_modeling_technique1.png" %}"> -->
+                
+                
+                
+            </div>
+            <div class="footer">
+                <h1>footer</h1>
+                <a href="../"><button>이전</button></a>
+            </div>
+        </div>
+
+
+
+    
+
+{% endblock content %}
