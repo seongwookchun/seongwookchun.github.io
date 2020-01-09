@@ -1,0 +1,86 @@
+
+<center><h1>활성화함수로 선형함수를 쓰면 은닉층을 쌓는 효과를 볼 수 없는 이유에 대한 일반화된 증명</h1>
+<h3>천성욱</h3></center>
+<hr>
+
+<ol>
+<li>
+<p>요약<br>
+단순한 신경망(입력 차원:1, 은닉층 차원:1, 출력 차원:1)인 경우나 노드가 여러 개인 신경망에서 하나의 노드에 대해서는 수식 전개가 단순하지만, 노드의 개수가 여러개일 때로 일반화하여 수식을 전개하는 것은 비교적 복잡합니다. 활성화함수로 선형함수를 사용하면, 은닉층의 효과를 볼 수 없는 현상에 대한 정성적인 이해를 더욱 높이기 위하여, 여러개의 은닉층의 노드를 동시에 고려한 일반화된 증명을 합니다. <br>
+핵심 논리<br>
+(1) n차원 평면방정식의 해의 존재성 (2) 모델의 입력 벡터의 성분끼리 그 계수가 같아야 함</p>
+</li>
+<li>
+<p>목차<br>
+단순한 경우에서의 증명<br>
+노드의 개수를 여러개 고려하는 일반화된 증명<br>
+맺음말</p>
+</li>
+<li>
+<p>단순한 경우에서의 증명<br></p>
+</li>
+</ol>
+<p><img src="https://tex.s2cms.ru/svg/%20y%20%3D%20h2%20*%20W3%20%2B%20b3%20" alt=" y = h2 * W3 + b3 " /> <br>
+<img src="https://tex.s2cms.ru/svg/%20%20%3D%20(h1%20*%20W2%20%2B%20b2)%20*%20W3%20%2B%20b3%20" alt="  = (h1 * W2 + b2) * W3 + b3 " /> <br>
+<img src="https://tex.s2cms.ru/svg/%20%20%3D%20h1%20*%20W2%20*%20W3%20%2B%20b2%20*%20W3%20%2B%20b3%20" alt="  = h1 * W2 * W3 + b2 * W3 + b3 " /> <br>
+<img src="https://tex.s2cms.ru/svg/%20%20%3D%20(x%20*%20W1%20%2B%20b1)%20*%20W2%20*%20W3%20%2B%20b2%20*%20W3%20%2B%20b3%20" alt="  = (x * W1 + b1) * W2 * W3 + b2 * W3 + b3 " /> <br>
+<img src="https://tex.s2cms.ru/svg/%20%20%3D%20x%20*%20W1%20*%20W2%20*%20W3%20%2B%20b1%20*%20W2%20*%20W3%20%2B%20b2%20*%20W3%20%2B%20b3%20" alt="  = x * W1 * W2 * W3 + b1 * W2 * W3 + b2 * W3 + b3 " /> <br>
+<img src="https://tex.s2cms.ru/svg/%20%20%3D%20x%20*%20W%E2%80%99%20%2B%20b%E2%80%99%20" alt="  = x * W’ + b’ " /> <br></p>
+<p><img src="https://tex.s2cms.ru/svg/W%E2%80%99%20%3D%20W1%20*%20W2%20*%20W3" alt="W’ = W1 * W2 * W3" /> <br>
+<img src="https://tex.s2cms.ru/svg/b%E2%80%99%20%3D%20b1%20*%20W2%20*%20W3%20%2B%20b2%20*%20W3%20%2B%20b3" alt="b’ = b1 * W2 * W3 + b2 * W3 + b3" /><br>
+결국 전체 신경망이 은닉층을 갖지 못하고, 입력층과 출력층만을 갖는 것과 동등하게 되버립니다.</p>
+<ol start="4">
+<li>노드의 개수를 여러개 고려하는 일반화된 증명<br>
+증명할 명제 :
+한 개의 은닉층이 있는 신경망, <img src="https://tex.s2cms.ru/svg/%7BNN%7D%5E%7B1%7D" alt="{NN}^{1}" />와 은닉층이 없는 신경망, <img src="https://tex.s2cms.ru/svg/%7BNN%7D%5E%7B0%7D" alt="{NN}^{0}" /> 이 서로 동등하다.
+신경망, <img src="https://tex.s2cms.ru/svg/%7BNN%7D%5E%7B%2B%7D" alt="{NN}^{+}" />에서 은닉층의 가중치, <img src="https://tex.s2cms.ru/svg/W%5E%7B(1)%7D_%7Bji%7D" alt="W^{(1)}_{ji}" />와 바이어스, <img src="https://tex.s2cms.ru/svg/b%5E%7B(1)%7D" alt="b^{(1)}" />와 무관하게 입력층에서의 가중치,<img src="https://tex.s2cms.ru/svg/%20W%5E%7B(2)%7D_%7Bkj%7D" alt=" W^{(2)}_{kj}" />와 바이어스, <img src="https://tex.s2cms.ru/svg/b%5E%7B(2)%7D" alt="b^{(2)}" />으로 출력값 <img src="https://tex.s2cms.ru/svg/z_%7Bk%7D%5E%7B(3)%7D" alt="z_{k}^{(3)}" />를 조절할 수 있다.
+보조정리:
+계수와 변수의 곱의 선형결합으로 나타내어진 두 식,
+<img src="https://tex.s2cms.ru/svg/%20f(x_%7B1%7D%2C%20x_%7B2%7D%2C%20x_%7B3%7D%2C%20...)%20%3D%200%20" alt=" f(x_{1}, x_{2}, x_{3}, ...) = 0 " /> ,
+<img src="https://tex.s2cms.ru/svg/%20g(x_%7B1%7D%2C%20x_%7B2%7D%2C%20x_%7B3%7D%2C%20...)%20%3D%200%20" alt=" g(x_{1}, x_{2}, x_{3}, ...) = 0 " /> 이</li>
+</ol>
+<p>변수 <img src="https://tex.s2cms.ru/svg/(x_%7B1%7D%2C%20x_%7B2%7D%2C%20x_%7B3%7D%2C%20...%20)" alt="(x_{1}, x_{2}, x_{3}, ... )" /> 의 값과 무관하면서, 서로 같기 위해서는 변수의 성분별로 그 계수의 값이 같아야 한다.</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/a_%7B1%7Dx_%7B1%7D%2Ba_%7B2%7Dx_%7B2%7D%2Ba_%7B3%7Dx_%7B3%7D%2B...%20%3D%20b_%7B1%7Dx_%7B1%7D%2Bb_%7B2%7Dx_%7B2%7D%2Bb_%7B3%7Dx_%7B3%7D%2B..." alt="a_{1}x_{1}+a_{2}x_{2}+a_{3}x_{3}+... = b_{1}x_{1}+b_{2}x_{2}+b_{3}x_{3}+..." /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/a_%7B1%7D%20%3D%20b_%7B1%7D" alt="a_{1} = b_{1}" /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/a_%7B2%7D%20%3D%20b_%7B2%7D" alt="a_{2} = b_{2}" /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/a_%7B3%7D%3Db_%7B3%7D" alt="a_{3}=b_{3}" /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/%5Cvdots" alt="\vdots" /></p>
+<p><h2>증명</h2>
+신경망 구조<br></p>
+<img src="https://drive.google.com/uc?export=view&id=1BNYAHILc4eeeMxvH5I7pwR1ozy3xKsPT">
+<p>은닉층이 한 개 있는 경우와 없는 경우이고, 가중치의 인덱스는 종점, 시점 순서를 기준으로 사용했습니다.</p>
+<p>은닉층이 없는 경우,</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/%20z_%7Bk%7D%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7B%5CBar%7BN%7D%7D%20%5B%5CBar%7BW%7D_%7Bki%7Dx_%7Bi%7D%5D%20%2B%20B%20%20" alt=" z_{k} = \Sigma_{j=1}^{\Bar{N}} [\Bar{W}_{ki}x_{i}] + B  " /></p>
+<p>은닉층이 있는 경우,</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/%20z%5E%7B(3)%7D_%7Bk%7D%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7Dz_%7Bj%7D%5E%7B(2)%7D%5D%20%2B%20b%5E%7B(2)%7D%20%20" alt=" z^{(3)}_{k} = \Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}z_{j}^{(2)}] + b^{(2)}  " /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/z%5E%7B(2)%7D_%7Bj%7D%20%3D%20%5CSigma_%7Bi%3D1%7D%5E%7BN%5E%7B(1)%7D%7D%5BW_%7Bji%7D%5E%7B(1)%7Dx_%7Bi%7D%5E%7B(1)%7D%5D%20%2B%20b%5E%7B(1)%7D%20%20" alt="z^{(2)}_{j} = \Sigma_{i=1}^{N^{(1)}}[W_{ji}^{(1)}x_{i}^{(1)}] + b^{(1)}  " /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/z%5E%7B(3)%7D_%7Bk%7D%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%20%5BW_%7Bkj%7D%5E%7B(2)%7D%20%5C%7B%5CSigma_%7Bi%3D1%7D%5E%7BN%5E%7B(1)%7D%7D%5BW_%7Bji%7D%5E%7B(1)%7Dx_%7Bi%7D%5E%7B(1)%7D%5D%20%2B%20b%5E%7B(1)%7D%20%5C%7D%5D%20%2B%20b%5E%7B(2)%7D%20%5C%20%5Ccdots%20(eqn%201)" alt="z^{(3)}_{k} = \Sigma_{j=1}^{N^{(2)}} [W_{kj}^{(2)} \{\Sigma_{i=1}^{N^{(1)}}[W_{ji}^{(1)}x_{i}^{(1)}] + b^{(1)} \}] + b^{(2)} \ \cdots (eqn 1)" /></p>
+<p>eqn 1에서 바이어스부분을 따로 보고 가중치 부분을 따로 떼어내어 증명을 진행하겠습니다.<br><br></p>
+<p><b>(i) 단계 : 바이어스 <br></b></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/z%5E%7B(3)%7D_%7Bk%7D%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7D%5C%7B%5CSigma_%7Bi%3D1%7D%5E%7BN%5E%7B(1)%7D%7D%5BW_%7Bji%7D%5E%7B(1)%7Dx_%7Bi%7D%5E%7B(1)%7D%5D%20%2B%20b%5E%7B(1)%7D%20%5C%7D%5D%20%2B%20b%5E%7B(2)%7D%20%20" alt="z^{(3)}_{k} = \Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}\{\Sigma_{i=1}^{N^{(1)}}[W_{ji}^{(1)}x_{i}^{(1)}] + b^{(1)} \}] + b^{(2)}  " /></p>
+<p>상수항만 떼어내어서 문자 B로 정리하겠습니다.</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/B%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7D%20%5C%7Bb%5E%7B(1)%7D%20%5C%7D%20%5D%20%2B%20b%5E%7B(2)%7D%20" alt="B = \Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)} \{b^{(1)} \} ] + b^{(2)} " /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/B%20%3D%20b%5E%7B(1)%7D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7D%20%20%5D%20%2B%20b%5E%7B(2)%7D%20" alt="B = b^{(1)} \Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}  ] + b^{(2)} " /></p>
+<p><img src="https://tex.s2cms.ru/svg/b%5E%7B(2)%7D" alt="b^{(2)}" />에 대해서 정리하면,</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/b%5E%7B(2)%7D%20%3D%20B-%20b%5E%7B(1)%7D%7B%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7D%7D%5D%20" alt="b^{(2)} = B- b^{(1)}{\Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}}] " /></p>
+<p><img src="https://tex.s2cms.ru/svg/%20W_%7Bkj%7D%5E%7B(2)%7D%2C%20N%5E%7B(2)%7D%2C%20N%5E%7B(1)%7D" alt=" W_{kj}^{(2)}, N^{(2)}, N^{(1)}" />  값과 무관하게 <img src="https://tex.s2cms.ru/svg/%20b%5E%7B(2)%7D" alt=" b^{(2)}" />  값만으로 임의의 B 값에 대응시킬 수 있습니다.<br><br></p>
+<p><b>(ii) 단계 : 가중치</b>
+eqn 1에서 상수항을 제외한 나머지 부분인, 변수  <img src="https://tex.s2cms.ru/svg/%20x_%7Bi%7D%20" alt=" x_{i} " />  을 떼어내어서 정리해보겠습니다.</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/z%5E%7B(3)%7D_%7Bk%7D%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7D%5C%7B%5CSigma_%7Bi%3D1%7D%5E%7BN%5E%7B(1)%7D%7D%5BW_%7Bji%7D%5E%7B(1)%7Dx_%7Bi%7D%5E%7B(1)%7D%5D%20%2B%20b%5E%7B(1)%7D%20%5C%7D%5D%20%2B%20b%5E%7B(2)%7D%20%20" alt="z^{(3)}_{k} = \Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}\{\Sigma_{i=1}^{N^{(1)}}[W_{ji}^{(1)}x_{i}^{(1)}] + b^{(1)} \}] + b^{(2)}  " /></p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7D%5CSigma_%7Bi%3D1%7D%5E%7BN%5E%7B(1)%7D%7D%5BW_%7Bji%7D%5E%7B(1)%7Dx_%7Bi%7D%5E%7B(1)%7D%20%5D%20%5D%20" alt="\Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}\Sigma_{i=1}^{N^{(1)}}[W_{ji}^{(1)}x_{i}^{(1)} ] ] " /></p>
+<p>은닉층이 없는 신경망과 은닉층이 한 개 있는 신경망의 출력값  <img src="https://tex.s2cms.ru/svg/z_%7Bk%7D" alt="z_{k}" />  가 일치한다고 하면, 입력  <img src="https://tex.s2cms.ru/svg/x_%7Bi%7D" alt="x_{i}" />  의 성분마다 계수가 일치해야 합니다.</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/%5CBar%7BW%7D_%7Bki%7D%20x_%7Bi%7D%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7DW_%7Bji%7D%5E%7B(1)%7D%20%5D%20x_%7Bi%7D%5E%7B(1)%7D%20" alt="\Bar{W}_{ki} x_{i} = \Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}W_{ji}^{(1)} ] x_{i}^{(1)} " /></p>
+<p><img src="https://tex.s2cms.ru/svg/x_%7Bi%7D%5E%7B(1)%7D" alt="x_{i}^{(1)}" /> 에 대하여 계수를 정리하면,</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/%5CBar%7BW%7D_%7Bki%7D%20%3D%20%5CSigma_%7Bj%3D1%7D%5E%7BN%5E%7B(2)%7D%7D%5BW_%7Bkj%7D%5E%7B(2)%7DW_%7Bji%7D%5E%7B(1)%7D%20%5D%20" alt="\Bar{W}_{ki} = \Sigma_{j=1}^{N^{(2)}}[W_{kj}^{(2)}W_{ji}^{(1)} ] " /></p>
+<p>각각의  i  번째 입력 노드마다,  <img src="https://tex.s2cms.ru/svg/N%5E%7B(2)%7D" alt="N^{(2)}" />  차 평면의 방정식을 얻게 됩니다. 위의 식을 평면의 방정식에 비유를 들면,</p>
+<p><img src="https://tex.s2cms.ru/svg/%5CBar%7BW%7D_%7Bi%7D%20%3D%20a_%7B0%7D" alt="\Bar{W}_{i} = a_{0}" /> 로 상수항으로 잡고,</p>
+<p><img src="https://tex.s2cms.ru/svg/W_%7Bkj%7D%5E%7B(2)%7D%20%3D%20a_%7Bj%7D" alt="W_{kj}^{(2)} = a_{j}" />  계수로 잡고,</p>
+<p><img src="https://tex.s2cms.ru/svg/%20W_%7Bji%7D%5E%7B(1)%7D%20%3D%20t_%7Bj%7D" alt=" W_{ji}^{(1)} = t_{j}" />  로 변수로 잡으면,</p>
+<p align="center" style="text-align: center;"><img align="center" src="https://tex.s2cms.ru/svg/%20a_%7B0%7D%20%3D%20a_%7B1%7D%20t_%7B1%7D%20%2B%20a_%7B2%7D%20t_%7B2%7D%20%2B%20%5Ccdots%20%2B%20a_%7BN%5E%7B(2)%7D%7D%20t_%7BN%5E%7B(2)%7D%20" alt=" a_{0} = a_{1} t_{1} + a_{2} t_{2} + \cdots + a_{N^{(2)}} t_{N^{(2)} " /></p>
+<p><img src="https://tex.s2cms.ru/svg/%20N%5E%7B(2)%7D" alt=" N^{(2)}" />  차원의 평면의 방정식이 얻어집니다. 동시에 모두 0이 아닌, 임의의 계수 <img src="https://tex.s2cms.ru/svg/%20a_%7Bj%7D%20" alt=" a_{j} " />이 주어졌을 때, 임의의 <img src="https://tex.s2cms.ru/svg/%20a_%7Bj%7D" alt=" a_{j}" /> 에 대하여 평면의 방정식은 항상 해를 갖습니다. 즉, 신경망  <img src="https://tex.s2cms.ru/svg/NN%5E%7B1%7D" alt="NN^{1}" />  에서  <img src="https://tex.s2cms.ru/svg/W_%7Bkj%7D%5E%7B(2)%7D" alt="W_{kj}^{(2)}" />  값과 무관하게  <img src="https://tex.s2cms.ru/svg/W_%7Bji%7D%5E%7B(1)%7D" alt="W_{ji}^{(1)}" />  는  <img src="https://tex.s2cms.ru/svg/%5Cbar%7BW%7D_%7Bi%7D" alt="\bar{W}_{i}" />  값을 정할 수 있습니다. 그런데 <img src="https://tex.s2cms.ru/svg/a_%7Bi%7D" alt="a_{i}" />값이 동시에 0인 경우는 입력을 출력하지 못하는 네트워크이므로, 이 경우를 제외할 수 있습니다.</p>
+<p>단계 (i), (ii)에 의하여 신경망  <img src="https://tex.s2cms.ru/svg/NN%5E%7B1%7D" alt="NN^{1}" /> 가 신경망 <img src="https://tex.s2cms.ru/svg/%20NN%5E%7B0%7D" alt=" NN^{0}" />  와 동등함을 알 수 있습니다.</p>
+<p><img src="https://tex.s2cms.ru/svg/NN%5E%7B1%7D" alt="NN^{1}" />  의 은닉층의 가중치는 의미를 갖지 못하기 때문에, 전체 신경망은 은닉층이 없는 신경망  <img src="https://tex.s2cms.ru/svg/NN%5E%7B0%7D" alt="NN^{0}" />  와 다를바가 없다고 결론지을 수 있습니다. <img src="https://tex.s2cms.ru/svg/%5Csquare%20" alt="\square " /></p>
+<ol start="3">
+<li>맺음말<br>
+신경망에서 활성화함수로 선형함수를 쓰게 되면, 은닉층의 개수를 1개 이상으로 늘려도, 은닉층이 없는 신경망과 다를 바가 없습니다. 활성화함수로 비선형함수를 쓸 때의 심층신경망에서의 성능을 얻을 수 없게 됩니다. 딥러닝에서의 은닉층의 효과를 보기 위해서는 선형함수를 활성화함수로 사용하면 안됩니다.</li>
+</ol>
