@@ -43,13 +43,15 @@ For example, I found a simple view to describe bilayer graphenes in this project
 <a href="/prj/prj_pybinding_97gnr_modeling.html">link</a>
 </p>
 
-<p id="id_04">
-4. Model training data engineering webtool(Django, JQuery, React)
-(started from May 2020, for 2 months)
-I made a webtool which offers more efficiency for engineering training data for a NED model than previous methodology.
-The NED model decides a specific named entity from each mentions in sentences by scoring from neighboring words as its context.
-ex)
-</p>
+<p>
+	4. Key value library benchmark(basics of key value library, installation with proper version)
+	(started from March 2020, 1 month)
+	The object is to find out which key value library is fastest on set and put operations and compare with BerkeleyDB.
+	Although there are many open source key value stores, RocksDB, Memcached, Redis are chosen aside with BerkeleyDB.
+	I learned basic concepts: <br>
+	CAP theorem, probabilistic data structure(Bloom filter), and in-memory kv store, on-disk kv store, embedded kv store.
+	<a href="/prj/prj_kvstore.html">link</a>
+	
 	
 <p>
 5. Attempt to convert NED engine into Korean(Java, PostgreSQL)
@@ -62,7 +64,21 @@ I insist that by conducting this project my abilities is improved:
 1. to search on stackoverflow and etc. to tackle whatever issues 
 2. to install applications of proper version which is compatible with the project on Ubuntu, CentOS
 3. to write installation docs and documentations which reproduce and resolve issues
+	<a href="/prj/prj_NED.html">link</a>
 </p>
+
+	
+<p>
+6. Model training data engineering webtool(Django, JQuery, React)
+(started from May 2020, for 2 months)
+I made a webtool of proto type version which offers more work efficiency for engineering training data for a NED model than previous manner.
+The NED model decides a specific named entity from each mentions in sentences by scoring from neighboring words as its context.
+Engineering is a human process to correct the dictionary which stores information of words giving scores to certain mention.
+The previous manner is conducted by linux terminal, vim editor. It is okay only for people who are computer developer or have ability to handle basic linux.
+The need was occured to make web tool which enables this engineering process also to be done by people who are not familiary with linux.
+	<a href="/prj/prj_NEDwebtool.html">link</a>
+</p>
+	
 	
 </p>
 </body>
