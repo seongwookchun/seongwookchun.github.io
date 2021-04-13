@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <title>labeling-ui-improve</title>
+</head>
+<body>
+    
+
+<pre class="prettyprint">
+  <code class="javascript">
+  eComplete = document.getElementById('btnImageComplete');
+  eBtnSave = document.querySelector('#btnImageTempSave');
+  let keysPressed = {};
+  const tagValues = {
+      clothes: ['', 'hat', 'bag', 'glasses', 'unbrella']
+  }
+  document.addEventListener('keydown', (event) => {
+      keysPressed[event.keyCode] = true;
+      console.log(keysPressed);
+      if (keysPressed[16] && event.keyCode === 90) {  // z
+          eBtnSave.click();
+      } 
+      else if (keysPressed[16] && event.keyCode === 88) {  // z
+          eComplete.click();
+      } 
+      else if (keysPressed[18] && (49 <= event.keyCode <= 57)) {  // alt + #
+          valueIndex = event.keyCode - 49;
+          // console.log(`nbLoop ${nbLoop} keyCode ${event.keyCode}`);
+          let eSelect = document.querySelector('select.tagInput');
+          eSelect.value = tagValues['clothes'][valueIndex];
+          // for (let i=0; i<nbLoop; i++) {
+              // console.log(`inside forloop: ${i}`);
+              // document.dispatchEvent(
+              //     new KeyboardEvent('keydown', {key: 'v', shiftKey: true})
+              // );
+          }
+      // } else if (event.keyCode === 86) {  //v
+      //     console.log('hi v!!!');
+      // }
+      // figure hot key
+      else if (keysPressed[16] && event.keyCode === 65) {  // a
+          changeClass(1);
+      } 
+      else if (keysPressed[16] && event.keyCode === 83) {  // s
+          changeClass(9);
+      } 
+      else if (keysPressed[16] && event.keyCode === 68) {  // d
+          changeClass(13);
+      } 
+      else if (keysPressed[16] && event.keyCode === 70) {  // f
+          changeClass(16);
+      } 
+      else if (keysPressed[16] && event.keyCode === 71) {  // g
+          changeClass(19);
+      } 
+  });
+
+  document.addEventListener('keyup', (event) => {
+      delete keysPressed[event.keyCode];
+      console.log(keysPressed);
+  });
+
+
+
+
+
+  // custom figure hotkeys
+  eObjList = document.querySelector('#rootObjectList');
+
+  function findObjOn(eUl) {
+      eLi = eUl.querySelectorAll('li');
+      console.log(`eLi length: ${eLi.length} \n ${eLi}`);
+
+      for (let i=0; i<eLi.length; i++) {
+          e = eLi[i];
+          className = e.classList[0]
+          if (className === 'on') {
+              return e;
+          }
+      }
+  }
+
+  eClassList = document.querySelector('#rootChangeClassList');
+  dicClassName = {};
+  for (let i=0; i<eClassList.length; i++) {
+      eClassList
+  }
+
+  function nameToClassNum(name) {
+
+      return classNum;
+  }
+
+
+  function changeClass(classNum) {
+      eLi = findObjOn(eObjList);
+
+      if (eLi === undefined) {
+          console.log(`object is not selected.`);
+          return -1;
+      }
+
+      eBtnClass = eLi.querySelector('button:nth-child(1)');
+      eBtnClass.click();
+      eClassItems = eClassList.querySelectorAll('li');
+      console.log(`classNum ${classNum}`);
+      eClassItems[classNum].click();
+  }
+
+  arrEntity = `1 강윤[블레이디]
+  9 나현[블레이디](910112)
+  13 다래[블레이디]
+  16 분홍[블레이디]
+  19 선영[블레이디]`.split('\n')
+  dicEntity = {}
+  for (let i=0; i<arrEntity; i++) {
+      [value, index] = arrEntity[i].split(' ')
+      dicEntity[i] = {
+          "value" : value,
+          "index" : index
+      };
+  }
+  </code>
+  </body>
+</html>
